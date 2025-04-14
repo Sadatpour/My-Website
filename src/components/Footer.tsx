@@ -76,10 +76,10 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="mt-10 pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 md:mb-0 neumorph-inset p-2">
+          <p className="text-gray-600 dark:text-white text-sm mb-4 md:mb-0 neumorph-inset p-2">
             &copy; {currentYear} Mojtaba Sadatpour. {t('footer.rights')}
           </p>
-          <p className="text-gray-600 dark:text-gray-400 text-sm flex items-center neumorph-inset p-2">
+          <p className="text-gray-600 dark:text-white text-sm flex items-center neumorph-inset p-2">
             {t('footer.madeWith')} <FaHeart size={12} className="text-red-500 mx-1" /> & Moji
           </p>
         </div>
