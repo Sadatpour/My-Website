@@ -12,11 +12,14 @@
     "@types/node": "^16.18.126",
     "@types/react": "^19.1.1",
     "@types/react-dom": "^19.1.2",
+    "@types/react-helmet": "^6.1.11",
     "emailjs-com": "^3.2.0",
     "framer-motion": "^12.6.5",
     "i18next": "^24.2.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-helmet": "^6.1.0",
+    "react-helmet-async": "^2.0.5",
     "react-i18next": "^15.4.1",
     "react-icons": "^4.8.0",
     "react-router-dom": "^7.5.0",
@@ -51,6 +54,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
-    "postcss": "^8.5.3"
+    "postcss": "^8.5.3",
+    "sharp": "^0.34.1"
   }
 }
