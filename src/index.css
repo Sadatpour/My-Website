@@ -1,0 +1,209 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Vazir';
+  src: url('./fonts/Vazir.woff2') format('woff2'),
+       url('./fonts/Vazir.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('./fonts/Poppins-Regular.woff2') format('woff2'),
+       url('./fonts/Poppins-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --primary-bg: #E6E7EE;
+  --dark-bg: #1F2937; /* gray-900 */
+  --primary-text: #1F2937; /* gray-900 - new variable for text in light mode */
+  --dark-text: #F9FAFB; /* gray-50 - for dark mode text */
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  
+  body {
+    @apply font-poppins;
+    background-color: var(--primary-bg) !important;
+    color: var(--primary-text) !important;
+  }
+
+  .dark body {
+    @apply bg-gray-900;
+    background-color: var(--dark-bg) !important;
+    color: var(--dark-text) !important;
+  }
+
+  body[dir="rtl"] {
+    @apply font-vazir;
+  }
+  
+  /* Text color overrides for light mode */
+  body:not(.dark) h1, 
+  body:not(.dark) h2, 
+  body:not(.dark) h3, 
+  body:not(.dark) h4, 
+  body:not(.dark) h5, 
+  body:not(.dark) h6, 
+  body:not(.dark) p, 
+  body:not(.dark) span, 
+  body:not(.dark) a, 
+  body:not(.dark) label, 
+  body:not(.dark) button {
+    color: var(--primary-text);
+  }
+  
+  /* Global background override for light mode */
+  body:not(.dark) section,
+  body:not(.dark) header,
+  body:not(.dark) footer,
+  body:not(.dark) main,
+  body:not(.dark) aside,
+  body:not(.dark) nav,
+  body:not(.dark) div {
+    background-color: var(--primary-bg);
+  }
+  
+  /* Only apply to sections with explicit backgrounds */
+  section[id], 
+  header, 
+  footer {
+    background-color: var(--primary-bg) !important;
+  }
+  
+  .dark section[id],
+  .dark header,
+  .dark footer {
+    background-color: var(--dark-bg) !important;
+  }
+  
+  /* Override Tailwind text classes */
+  .text-gray-600, .text-gray-700, .text-gray-800, .text-black, .text-gray-900 {
+    color: var(--primary-text) !important;
+  }
+  
+  .dark .text-white, 
+  .dark .text-gray-50, 
+  .dark .text-gray-100, 
+  .dark .text-gray-200, 
+  .dark .text-gray-300 {
+    color: var(--dark-text) !important;
+  }
+}
+
+@layer components {
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Neumorphism styles */
+  .neumorph-btn {
+    background-color: var(--primary-bg) !important;
+    @apply dark:bg-gray-800 rounded-xl relative overflow-hidden;
+    box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.1),
+                -6px -6px 12px rgba(255, 255, 255, 0.8);
+    color: var(--primary-text) !important;
+  }
+
+  .dark .neumorph-btn {
+    background-color: var(--dark-bg) !important;
+    box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.3),
+                -6px -6px 12px rgba(255, 255, 255, 0.05);
+    color: var(--dark-text) !important;
+  }
+
+  .neumorph-btn:hover {
+    background-color: var(--primary-bg) !important;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1),
+                -4px -4px 8px rgba(255, 255, 255, 0.8);
+    color: var(--primary-text) !important;
+  }
+
+  .dark .neumorph-btn:hover {
+    background-color: var(--dark-bg) !important;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3),
+                -4px -4px 8px rgba(255, 255, 255, 0.05);
+    color: var(--dark-text) !important;
+  }
+
+  .neumorph-btn:active {
+    background-color: var(--primary-bg) !important;
+    box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.1),
+                inset -4px -4px 8px rgba(255, 255, 255, 0.8);
+  }
+
+  .dark .neumorph-btn:active {
+    background-color: var(--dark-bg) !important;
+    box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.3),
+                inset -4px -4px 8px rgba(255, 255, 255, 0.05);
+  }
+
+  .neumorph-card {
+    background-color: var(--primary-bg) !important;
+    @apply dark:bg-gray-800 rounded-xl;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1),
+                -10px -10px 20px rgba(255, 255, 255, 0.8);
+  }
+
+  /* Special style for logo container to avoid background flash */
+  .neumorph-card img {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+
+  .dark .neumorph-card {
+    background-color: var(--dark-bg) !important;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3),
+                -10px -10px 20px rgba(255, 255, 255, 0.05);
+  }
+
+  .neumorph-inset {
+    background-color: var(--primary-bg) !important;
+    @apply dark:bg-gray-800 rounded-xl;
+    box-shadow: inset 6px 6px 12px rgba(0, 0, 0, 0.1),
+                inset -6px -6px 12px rgba(255, 255, 255, 0.8);
+  }
+
+  .dark .neumorph-inset {
+    background-color: var(--dark-bg) !important;
+    box-shadow: inset 6px 6px 12px rgba(0, 0, 0, 0.3),
+                inset -6px -6px 12px rgba(255, 255, 255, 0.05);
+  }
+  
+  /* Override any input fields that might have different backgrounds */
+  input, textarea, select {
+    background-color: var(--primary-bg) !important;
+    @apply dark:bg-gray-800 !important;
+    color: var(--primary-text) !important;
+  }
+  
+  .dark input, .dark textarea, .dark select {
+    color: var(--dark-text) !important;
+  }
+  
+  /* Ensure background colors stay consistent even with other classes */
+  .bg-white, .bg-gray-50, .bg-gray-100, .bg-gray-200 {
+    background-color: var(--primary-bg) !important;
+  }
+  
+  .dark .bg-white, 
+  .dark .bg-gray-50, 
+  .dark .bg-gray-100, 
+  .dark .bg-gray-200, 
+  .dark .bg-gray-300, 
+  .dark .bg-gray-400 {
+    background-color: var(--dark-bg) !important;
+  }
+}
