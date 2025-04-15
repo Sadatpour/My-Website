@@ -104,191 +104,402 @@ const Contact: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className={`${direction === 'rtl' ? 'md:order-2' : 'md:order-1'}`}
-          >
-            <form onSubmit={handleSubmit} className="neumorph-card p-8 space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  {t('contact.name')}
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-lg neumorph-inset border-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors bg-[#E6E7EE] dark:bg-gray-800 text-gray-800 dark:text-gray-200"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  {t('contact.email')}
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-lg neumorph-inset border-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors bg-[#E6E7EE] dark:bg-gray-800 text-gray-800 dark:text-gray-200"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  {t('contact.subject')}
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-lg neumorph-inset border-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors bg-[#E6E7EE] dark:bg-gray-800 text-gray-800 dark:text-gray-200"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  {t('contact.message')}
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={4}
-                  className="w-full px-4 py-3 rounded-lg neumorph-inset border-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors bg-[#E6E7EE] dark:bg-gray-800 text-gray-800 dark:text-gray-200"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full px-6 py-3 neumorph-btn text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400 font-medium flex items-center justify-center space-x-2 disabled:opacity-70"
+          {/* Contact Form: Without animation in mobile, with animation in desktop */}
+          <div className={`${direction === 'rtl' ? 'md:order-2' : 'md:order-1'}`}>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="hidden md:block"
+            >
+              <motion.div
+                initial={{ x: -50 }}
+                whileInView={{ x: 0 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
               >
-                {isSubmitting ? (
-                  <div className="w-5 h-5 border-2 border-gray-600 dark:border-gray-300 border-t-transparent rounded-full animate-spin"></div>
-                ) : (
-                  <>
-                    <FaPaperPlane size={16} />
-                    <span>{t('contact.send')}</span>
-                  </>
-                )}
-              </button>
-
-              {submitStatus === 'success' && (
-                <div className="p-3 rounded-lg bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-center">
-                  {t('contact.successMessage')}
-                </div>
-              )}
-
-              {submitStatus === 'error' && (
-                <div className="p-3 rounded-lg bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 text-center">
-                  {t('contact.errorMessage')}
-                </div>
-              )}
-            </form>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className={`${direction === 'rtl' ? 'md:order-1' : 'md:order-2'}`}
-          >
-            <div className="neumorph-card p-8 h-full flex flex-col">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
-                {t('contact.contactInfo')}
-              </h3>
-
-              <div className="space-y-6 flex-grow">
-                <div className="flex items-start space-x-4">
-                  <div className="neumorph-btn w-10 h-10 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
-                    <FaEnvelope size={20} />
-                  </div>
+                <form onSubmit={handleSubmit} className="neumorph-card p-8 space-y-6">
                   <div>
-                    <h4 className="text-lg font-medium text-gray-900 dark:text-white">
-                      {t('contact.emailAddress')}
-                    </h4>
-                    <a 
-                      href="mailto:sadatpour.web@gmail.com" 
-                      className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                    >
-                      sadatpour.web@gmail.com
-                    </a>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      {t('contact.name')}
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 rounded-lg neumorph-inset border-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors bg-[#E6E7EE] dark:bg-gray-800 text-gray-800 dark:text-gray-200"
+                    />
                   </div>
-                </div>
 
-                <div className="flex items-start space-x-4">
-                  <div className="neumorph-btn w-10 h-10 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
-                    <FaPhone size={20} />
-                  </div>
                   <div>
-                    <h4 className="text-lg font-medium text-gray-900 dark:text-white">
-                      {t('contact.phoneNumber')}
-                    </h4>
-                    <a 
-                      href="tel:+989120332037" 
-                      className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                    >
-                      +98 912 033 2037
-                    </a>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      {t('contact.email')}
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 rounded-lg neumorph-inset border-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors bg-[#E6E7EE] dark:bg-gray-800 text-gray-800 dark:text-gray-200"
+                    />
                   </div>
-                </div>
 
-                <div className="flex items-start space-x-4">
-                  <div className="neumorph-btn w-10 h-10 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
-                    <FaMapMarkerAlt size={20} />
-                  </div>
                   <div>
-                    <h4 className="text-lg font-medium text-gray-900 dark:text-white">
-                      {t('contact.location')}
-                    </h4>
-                    <p className="text-gray-600 dark:text-gray-300">
-                      Iran, Tehran
-                    </p>
+                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      {t('contact.subject')}
+                    </label>
+                    <input
+                      type="text"
+                      id="subject"
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 rounded-lg neumorph-inset border-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors bg-[#E6E7EE] dark:bg-gray-800 text-gray-800 dark:text-gray-200"
+                    />
                   </div>
-                </div>
-              </div>
 
-              <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
-                <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
-                  {t('contact.followMe')}
-                </h4>
-                <div className="flex space-x-4">
-                  <a 
-                    href="mailto:sadatpour.web@gmail.com" 
-                    rel="noopener noreferrer"
-                    className="neumorph-btn w-10 h-10 flex items-center justify-center text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400"
-                    aria-label="Email"
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      {t('contact.message')}
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      rows={4}
+                      className="w-full px-4 py-3 rounded-lg neumorph-inset border-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors bg-[#E6E7EE] dark:bg-gray-800 text-gray-800 dark:text-gray-200"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full px-6 py-3 neumorph-btn text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400 font-medium flex items-center justify-center space-x-2 disabled:opacity-70"
                   >
-                    <FaEnvelope size={16} />
-                  </a>
-                  <a 
-                    href="https://wa.me/+989120332037" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="neumorph-btn w-10 h-10 flex items-center justify-center text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400"
-                    aria-label="WhatsApp"
+                    {isSubmitting ? (
+                      <div className="w-5 h-5 border-2 border-gray-600 dark:border-gray-300 border-t-transparent rounded-full animate-spin"></div>
+                    ) : (
+                      <>
+                        <FaPaperPlane size={16} />
+                        <span>{t('contact.send')}</span>
+                      </>
+                    )}
+                  </button>
+
+                  {submitStatus === 'success' && (
+                    <div className="p-3 rounded-lg bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-center">
+                      {t('contact.successMessage')}
+                    </div>
+                  )}
+
+                  {submitStatus === 'error' && (
+                    <div className="p-3 rounded-lg bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 text-center">
+                      {t('contact.errorMessage')}
+                    </div>
+                  )}
+                </form>
+              </motion.div>
+            </motion.div>
+
+            {/* Mobile version without slide animation */}
+            <div className="md:hidden">
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+              >
+                <form onSubmit={handleSubmit} className="neumorph-card p-8 space-y-6">
+                  <div>
+                    <label htmlFor="name-mobile" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      {t('contact.name')}
+                    </label>
+                    <input
+                      type="text"
+                      id="name-mobile"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 rounded-lg neumorph-inset border-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors bg-[#E6E7EE] dark:bg-gray-800 text-gray-800 dark:text-gray-200"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="email-mobile" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      {t('contact.email')}
+                    </label>
+                    <input
+                      type="email"
+                      id="email-mobile"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 rounded-lg neumorph-inset border-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors bg-[#E6E7EE] dark:bg-gray-800 text-gray-800 dark:text-gray-200"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="subject-mobile" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      {t('contact.subject')}
+                    </label>
+                    <input
+                      type="text"
+                      id="subject-mobile"
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 rounded-lg neumorph-inset border-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors bg-[#E6E7EE] dark:bg-gray-800 text-gray-800 dark:text-gray-200"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="message-mobile" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      {t('contact.message')}
+                    </label>
+                    <textarea
+                      id="message-mobile"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      rows={4}
+                      className="w-full px-4 py-3 rounded-lg neumorph-inset border-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors bg-[#E6E7EE] dark:bg-gray-800 text-gray-800 dark:text-gray-200"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full px-6 py-3 neumorph-btn text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400 font-medium flex items-center justify-center space-x-2 disabled:opacity-70"
                   >
-                    <FaPhone size={16} />
-                  </a>
-                </div>
-              </div>
+                    {isSubmitting ? (
+                      <div className="w-5 h-5 border-2 border-gray-600 dark:border-gray-300 border-t-transparent rounded-full animate-spin"></div>
+                    ) : (
+                      <>
+                        <FaPaperPlane size={16} />
+                        <span>{t('contact.send')}</span>
+                      </>
+                    )}
+                  </button>
+
+                  {submitStatus === 'success' && (
+                    <div className="p-3 rounded-lg bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-center">
+                      {t('contact.successMessage')}
+                    </div>
+                  )}
+
+                  {submitStatus === 'error' && (
+                    <div className="p-3 rounded-lg bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 text-center">
+                      {t('contact.errorMessage')}
+                    </div>
+                  )}
+                </form>
+              </motion.div>
             </div>
-          </motion.div>
+          </div>
+
+          {/* Contact Info: Without animation in mobile, with animation in desktop */}
+          <div className={`${direction === 'rtl' ? 'md:order-1' : 'md:order-2'}`}>
+            {/* Desktop version with slide animation */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="hidden md:block"
+            >
+              <motion.div
+                initial={{ x: 50 }}
+                whileInView={{ x: 0 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+              >
+                <div className="neumorph-card p-8 h-full flex flex-col">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
+                    {t('contact.contactInfo')}
+                  </h3>
+
+                  <div className="space-y-6 flex-grow">
+                    <div className="flex items-start space-x-4">
+                      <div className="neumorph-btn w-10 h-10 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                        <FaEnvelope size={20} />
+                      </div>
+                      <div>
+                        <h4 className="text-lg font-medium text-gray-900 dark:text-white">
+                          {t('contact.emailAddress')}
+                        </h4>
+                        <a 
+                          href="mailto:sadatpour.web@gmail.com" 
+                          className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                        >
+                          sadatpour.web@gmail.com
+                        </a>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-4">
+                      <div className="neumorph-btn w-10 h-10 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                        <FaPhone size={20} />
+                      </div>
+                      <div>
+                        <h4 className="text-lg font-medium text-gray-900 dark:text-white">
+                          {t('contact.phoneNumber')}
+                        </h4>
+                        <a 
+                          href="tel:+989120332037" 
+                          className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                        >
+                          +98 912 033 2037
+                        </a>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-4">
+                      <div className="neumorph-btn w-10 h-10 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                        <FaMapMarkerAlt size={20} />
+                      </div>
+                      <div>
+                        <h4 className="text-lg font-medium text-gray-900 dark:text-white">
+                          {t('contact.location')}
+                        </h4>
+                        <p className="text-gray-600 dark:text-gray-300">
+                          Iran, Tehran
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                    <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                      {t('contact.followMe')}
+                    </h4>
+                    <div className="flex space-x-4">
+                      <a 
+                        href="mailto:sadatpour.web@gmail.com" 
+                        rel="noopener noreferrer"
+                        className="neumorph-btn w-10 h-10 flex items-center justify-center text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400"
+                        aria-label="Email"
+                      >
+                        <FaEnvelope size={16} />
+                      </a>
+                      <a 
+                        href="https://wa.me/+989120332037" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="neumorph-btn w-10 h-10 flex items-center justify-center text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400"
+                        aria-label="WhatsApp"
+                      >
+                        <FaPhone size={16} />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+
+            {/* Mobile version without slide animation */}
+            <div className="md:hidden">
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+              >
+                <div className="neumorph-card p-8 h-full flex flex-col">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
+                    {t('contact.contactInfo')}
+                  </h3>
+
+                  <div className="space-y-6 flex-grow">
+                    <div className="flex items-start space-x-4">
+                      <div className="neumorph-btn w-10 h-10 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                        <FaEnvelope size={20} />
+                      </div>
+                      <div>
+                        <h4 className="text-lg font-medium text-gray-900 dark:text-white">
+                          {t('contact.emailAddress')}
+                        </h4>
+                        <a 
+                          href="mailto:sadatpour.web@gmail.com" 
+                          className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                        >
+                          sadatpour.web@gmail.com
+                        </a>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-4">
+                      <div className="neumorph-btn w-10 h-10 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                        <FaPhone size={20} />
+                      </div>
+                      <div>
+                        <h4 className="text-lg font-medium text-gray-900 dark:text-white">
+                          {t('contact.phoneNumber')}
+                        </h4>
+                        <a 
+                          href="tel:+989120332037" 
+                          className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                        >
+                          +98 912 033 2037
+                        </a>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-4">
+                      <div className="neumorph-btn w-10 h-10 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                        <FaMapMarkerAlt size={20} />
+                      </div>
+                      <div>
+                        <h4 className="text-lg font-medium text-gray-900 dark:text-white">
+                          {t('contact.location')}
+                        </h4>
+                        <p className="text-gray-600 dark:text-gray-300">
+                          Iran, Tehran
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                    <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                      {t('contact.followMe')}
+                    </h4>
+                    <div className="flex space-x-4">
+                      <a 
+                        href="mailto:sadatpour.web@gmail.com" 
+                        rel="noopener noreferrer"
+                        className="neumorph-btn w-10 h-10 flex items-center justify-center text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400"
+                        aria-label="Email"
+                      >
+                        <FaEnvelope size={16} />
+                      </a>
+                      <a 
+                        href="https://wa.me/+989120332037" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="neumorph-btn w-10 h-10 flex items-center justify-center text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400"
+                        aria-label="WhatsApp"
+                      >
+                        <FaPhone size={16} />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

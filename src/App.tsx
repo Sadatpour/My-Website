@@ -29,7 +29,8 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     // Set the document direction based on the current language
     document.documentElement.dir = direction;
-  }, [direction]);
+    document.documentElement.lang = i18n.language;
+  }, [direction, i18n.language]);
 
   return (
     <div dir={direction} lang={i18n.language} className="min-h-screen">

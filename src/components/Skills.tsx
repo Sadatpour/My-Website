@@ -43,9 +43,10 @@ const SkillCard: React.FC<{
   return (
     <motion.div
       className="neumorph-card p-4 rounded-lg flex flex-col items-center gap-2"
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      transition={{ duration: 0.3, delay: index * 0.05 }}
+      viewport={{ once: true, margin: "-50px" }}
       whileHover={{ 
         scale: 1.05,
         transition: { duration: 0.2 }
@@ -66,19 +67,39 @@ const SkillCard: React.FC<{
   );
 };
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.04,
+      delayChildren: 0.1,
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.3 }
+  }
+};
+
 const Skills: React.FC = () => {
   const { t } = useTranslate();
   const { direction } = useLanguage();
   const { theme } = useTheme();
 
   return (
-    <section id="skills" className="py-20 bg-[#E6E7EE] dark:bg-gray-900">
+    <section id="skills" className="py-10 md:py-20 bg-[#E6E7EE] dark:bg-gray-900">
       <div className="container mx-auto px-4">
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-8 md:mb-16"
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.3 }}
           viewport={{ once: true }}
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-4">
@@ -89,7 +110,13 @@ const Skills: React.FC = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+        <motion.div 
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
           {SKILLS.map((skill, index) => (
             <SkillCard
               key={skill.name}
@@ -98,7 +125,7 @@ const Skills: React.FC = () => {
               theme={theme}
             />
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

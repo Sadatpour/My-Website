@@ -10,7 +10,7 @@
 I am Mojtaba Sadatpour, a Front-End Developer specializing in React and modern web technologies. I create responsive, user-friendly web applications with clean code and elegant design. My portfolio showcases my skills in JavaScript, TypeScript, React, and other front-end technologies.
 
 ### فارسی (Persian)
-من مجتبی سادات‌پور هستم، یک توسعه‌دهنده فرانت‌اند با تخصص در ری‌اکت و فناوری‌های مدرن وب. من برنامه‌های کاربردی وب واکنش‌گرا و کاربرپسند با کد تمیز و طراحی زیبا ایجاد می‌کنم. نمونه کارهای من مهارت‌های من در جاوااسکریپت، تایپ‌اسکریپت، ری‌اکت و دیگر فناوری‌های فرانت‌اند را نشان می‌دهد.
+من مجتبا سادات‌پور هستم، یک توسعه‌دهنده فرانت‌اند با تخصص در ری‌اکت و فناوری‌های مدرن وب. من برنامه‌های کاربردی وب واکنش‌گرا و کاربرپسند با کد تمیز و طراحی زیبا ایجاد می‌کنم. نمونه کارهای من مهارت‌های من در جاوااسکریپت، تایپ‌اسکریپت، ری‌اکت و دیگر فناوری‌های فرانت‌اند را نشان می‌دهد.
 
 ### Türkçe (Turkish)
 Ben Mojtaba Sadatpour, React ve modern web teknolojilerinde uzmanlaşmış bir Front-End Geliştiricisiyim. Temiz kod ve şık tasarımla duyarlı, kullanıcı dostu web uygulamaları oluşturuyorum. Portföyüm, JavaScript, TypeScript, React ve diğer front-end teknolojilerindeki becerilerimi sergiliyor.

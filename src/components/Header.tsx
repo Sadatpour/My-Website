@@ -10,7 +10,9 @@ import {
   FaTelegram,
   FaGithub,
   FaLinkedin,
-  FaWhatsapp
+  FaWhatsapp,
+  FaEnvelope,
+  FaPhone
 } from 'react-icons/fa';
 import { useLanguage, languages } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
@@ -24,16 +26,16 @@ const useTranslate = () => {
   return { t };
 };
 
-const CircleLogo: React.FC = () => {
+const CircleLogo: React.FC<{isMobile?: boolean}> = ({ isMobile = false }) => {
   const { theme } = useTheme();
   
   return (
-    <div className="relative w-12 h-12 md:w-14 md:h-14 flex items-center justify-center neumorph-btn rounded-full overflow-hidden">
+    <div className={`relative ${isMobile ? 'w-10 h-10' : 'w-12 h-12 md:w-14 md:h-14'} flex items-center justify-center neumorph-btn rounded-full overflow-hidden`}>
       <div className="absolute inset-0 flex items-center justify-center bg-[#E6E7EE] dark:bg-gray-800">
         <img 
           src="/images/logo.png" 
           alt="Sadatpour Logo" 
-          className="w-9 h-9 md:w-11 md:h-11 object-contain"
+          className={`${isMobile ? 'w-7 h-7' : 'w-9 h-9 md:w-11 md:h-11'} object-contain`}
           onError={(e) => {
             const target = e.target as HTMLImageElement;
             console.error("Logo image failed to load");
@@ -57,6 +59,10 @@ const getIconComponent = (iconName: string, size = 16) => {
       return <FaLinkedin size={size} />;
     case 'FaWhatsapp':
       return <FaWhatsapp size={size} />;
+    case 'FaEnvelope':
+      return <FaEnvelope size={size} />;
+    case 'FaPhone':
+      return <FaPhone size={size} />;
     default:
       return null;
   }
@@ -97,6 +103,9 @@ const Header: React.FC = () => {
 
   // Filter social links to show only the top 4 for header
   const headerSocialLinks = SOCIAL_LINKS.slice(0, 4);
+  
+  // Filter social links that have valid icons
+  const validSocialLinks = SOCIAL_LINKS.filter(link => getIconComponent(link.icon) !== null);
 
   return (
     <header
@@ -115,7 +124,7 @@ const Header: React.FC = () => {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
-          className="flex items-center"
+          className="hidden md:flex items-center"
         >
           <a href="#hero" className="flex items-center space-x-3" aria-label="Logo">
             <CircleLogo />
@@ -190,8 +199,8 @@ const Header: React.FC = () => {
                   onClick={() => changeLanguage(code as keyof typeof languages)}
                   className={`w-full text-left px-4 py-2 text-sm ${
                     currentLanguage === code 
-                      ? 'bg-indigo-100 text-indigo-600 dark:bg-indigo-900 dark:text-indigo-400' 
-                      : 'hover:bg-gray-200 dark:hover:bg-gray-700'
+                      ? 'bg-[rgb(208,206,255)] text-indigo-600 dark:text-indigo-800' 
+                      : 'hover:bg-[rgb(208,206,255)] dark:hover:bg-[rgb(208,206,255)]'
                   } dark:text-gray-300`}
                 >
                   {name}
@@ -201,25 +210,55 @@ const Header: React.FC = () => {
           </div>
         </div>
 
-        {/* Mobile Menu Button */}
-        <div className="md:hidden flex items-center space-x-2">
-          {/* Theme Toggle - Mobile */}
-          <button 
-            onClick={toggleTheme} 
-            className="neumorph-btn w-9 h-9 flex items-center justify-center text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400"
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? <FaSun size={16} /> : <FaMoon size={16} />}
-          </button>
+        {/* Mobile: Logo and Menu Buttons */}
+        <div className="md:hidden flex items-center justify-between w-full">
+          {/* Mobile Logo */}
+          <a href="#hero" aria-label="Logo">
+            <CircleLogo isMobile={true} />
+          </a>
+          
+          {/* Mobile Menu Buttons */}
+          <div className="flex items-center space-x-2">
+            {/* Language Selector - Mobile Header */}
+            <div className="relative group">
+              <button className="neumorph-btn w-9 h-9 flex items-center justify-center text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400">
+                <span className="font-medium">{currentLanguage.toUpperCase()}</span>
+              </button>
+              <div className="absolute right-0 top-full mt-1 w-32 bg-[#E6E7EE] dark:bg-gray-800 shadow-lg rounded-md overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 neumorph-card z-50">
+                {Object.entries(languages).map(([code, { name }]) => (
+                  <button
+                    key={code}
+                    onClick={() => changeLanguage(code as keyof typeof languages)}
+                    className={`w-full text-left px-4 py-2 text-sm ${
+                      currentLanguage === code 
+                        ? 'bg-[rgb(208,206,255)] text-indigo-600 dark:text-indigo-800' 
+                        : 'hover:bg-[rgb(208,206,255)] dark:hover:bg-[rgb(208,206,255)]'
+                    } dark:text-gray-300`}
+                  >
+                    {name}
+                  </button>
+                ))}
+              </div>
+            </div>
+            
+            {/* Theme Toggle - Mobile */}
+            <button 
+              onClick={toggleTheme} 
+              className="neumorph-btn w-9 h-9 flex items-center justify-center text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400"
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? <FaSun size={16} /> : <FaMoon size={16} />}
+            </button>
 
-          {/* Menu Toggle - Mobile */}
-          <button 
-            className="neumorph-btn w-9 h-9 flex items-center justify-center text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400" 
-            onClick={toggleMenu}
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? <FaTimes size={16} /> : <FaBars size={16} />}
-          </button>
+            {/* Menu Toggle - Mobile */}
+            <button 
+              className="neumorph-btn w-9 h-9 flex items-center justify-center text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400" 
+              onClick={toggleMenu}
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? <FaTimes size={16} /> : <FaBars size={16} />}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -263,7 +302,7 @@ const Header: React.FC = () => {
           <div className="py-2 border-t border-gray-200 dark:border-gray-700">
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Social Links</p>
             <div className="flex flex-wrap gap-2">
-              {SOCIAL_LINKS.map((link, index) => (
+              {validSocialLinks.map((link, index) => (
                 <a
                   key={index}
                   href={link.url}
@@ -291,8 +330,8 @@ const Header: React.FC = () => {
                   }}
                   className={`neumorph-btn text-left px-3 py-2 text-sm rounded ${
                     currentLanguage === code 
-                      ? 'bg-indigo-100 text-indigo-600 dark:bg-indigo-900 dark:text-indigo-400' 
-                      : 'bg-[#E6E7EE] hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-300'
+                      ? 'bg-[rgb(208,206,255)] text-indigo-600 dark:text-indigo-800' 
+                      : 'bg-[#E6E7EE] hover:bg-[rgb(208,206,255)] dark:bg-gray-800 dark:hover:bg-[rgb(208,206,255)] dark:text-gray-300'
                   }`}
                 >
                   {name}

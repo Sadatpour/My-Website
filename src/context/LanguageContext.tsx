@@ -32,6 +32,26 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
     i18n.changeLanguage(lang);
     document.documentElement.dir = languages[lang].dir;
     document.documentElement.lang = lang;
+    
+    // Apply Kalameh font for Persian language
+    const head = document.head;
+    let style = document.getElementById('persian-font-style') as HTMLStyleElement;
+    
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'persian-font-style';
+      head.appendChild(style);
+    }
+    
+    if (lang === 'fa') {
+      style.innerHTML = `
+        html[lang="fa"], html[lang="fa"] * {
+          font-family: 'Kalameh', sans-serif !important;
+        }
+      `;
+    } else {
+      style.innerHTML = '';
+    }
   };
 
   const value = {
