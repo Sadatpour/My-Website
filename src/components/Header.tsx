@@ -94,11 +94,23 @@ const Header: React.FC = () => {
   };
 
   const scrollToSection = (sectionId: string) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
-    }
     closeMenu();
+    
+    setTimeout(() => {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        const headerOffset = 70; // تنظیم اندازه هدر
+        const sectionPosition = section.getBoundingClientRect().top;
+        const offsetPosition = sectionPosition + window.pageYOffset - headerOffset;
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      } else {
+        console.error(`Section with id ${sectionId} not found`);
+      }
+    }, 100); // تأخیر کوتاه برای اطمینان از بسته شدن منو
   };
 
   // Filter social links to show only the top 4 for header
@@ -220,15 +232,40 @@ const Header: React.FC = () => {
           {/* Mobile Menu Buttons */}
           <div className="flex items-center space-x-2">
             {/* Language Selector - Mobile Header */}
-            <div className="relative group">
-              <button className="neumorph-btn w-9 h-9 flex items-center justify-center text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400">
+            <div className="relative">
+              <button 
+                className="neumorph-btn w-9 h-9 flex items-center justify-center text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400"
+                onClick={() => {
+                  // Toggle language dropdown
+                  const dropdown = document.getElementById('mobile-lang-dropdown');
+                  if (dropdown) {
+                    dropdown.classList.toggle('opacity-0');
+                    dropdown.classList.toggle('invisible');
+                    dropdown.classList.toggle('opacity-100');
+                    dropdown.classList.toggle('visible');
+                  }
+                }}
+              >
                 <span className="font-medium">{currentLanguage.toUpperCase()}</span>
               </button>
-              <div className="absolute right-0 top-full mt-1 w-32 bg-[#E6E7EE] dark:bg-gray-800 shadow-lg rounded-md overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 neumorph-card z-50">
+              <div 
+                id="mobile-lang-dropdown"
+                className="absolute right-0 top-full mt-1 w-32 bg-[#E6E7EE] dark:bg-gray-800 shadow-lg rounded-md overflow-hidden opacity-0 invisible transition-all duration-300 neumorph-card z-50"
+              >
                 {Object.entries(languages).map(([code, { name }]) => (
                   <button
                     key={code}
-                    onClick={() => changeLanguage(code as keyof typeof languages)}
+                    onClick={() => {
+                      changeLanguage(code as keyof typeof languages);
+                      // Hide dropdown after selection
+                      const dropdown = document.getElementById('mobile-lang-dropdown');
+                      if (dropdown) {
+                        dropdown.classList.add('opacity-0');
+                        dropdown.classList.add('invisible');
+                        dropdown.classList.remove('opacity-100');
+                        dropdown.classList.remove('visible');
+                      }
+                    }}
                     className={`w-full text-left px-4 py-2 text-sm ${
                       currentLanguage === code 
                         ? 'bg-[rgb(208,206,255)] text-indigo-600 dark:text-indigo-800' 
@@ -273,30 +310,46 @@ const Header: React.FC = () => {
         className="md:hidden overflow-hidden bg-[#E6E7EE] dark:bg-gray-800"
       >
         <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
-          <button 
-            onClick={() => scrollToSection('hero')} 
+          <a 
+            href="#hero" 
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection('hero');
+            }}
             className="neumorph-btn px-4 py-2 text-left text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400 font-medium"
           >
             {t('header.home')}
-          </button>
-          <button 
-            onClick={() => scrollToSection('skills')} 
+          </a>
+          <a 
+            href="#skills" 
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection('skills');
+            }}
             className="neumorph-btn px-4 py-2 text-left text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400 font-medium"
           >
             {t('header.skills')}
-          </button>
-          <button 
-            onClick={() => scrollToSection('projects')} 
+          </a>
+          <a 
+            href="#projects" 
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection('projects');
+            }}
             className="neumorph-btn px-4 py-2 text-left text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400 font-medium"
           >
             {t('header.projects')}
-          </button>
-          <button 
-            onClick={() => scrollToSection('contact')} 
+          </a>
+          <a 
+            href="#contact" 
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection('contact');
+            }}
             className="neumorph-btn px-4 py-2 text-left text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400 font-medium"
           >
             {t('header.contact')}
-          </button>
+          </a>
 
           {/* Social Links - Mobile */}
           <div className="py-2 border-t border-gray-200 dark:border-gray-700">
